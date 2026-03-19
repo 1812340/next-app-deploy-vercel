@@ -1,30 +1,28 @@
 pipeline {
-     enivironment {
-          agent any
-          environment {
-            VERCEL_TOKEN = credentials('VERCEL_TOKEN')
-          }
-          stages{
-            stage("Install"){
-                steps{
-                    bat 'npm install'
-                }
+    agent any
+    environment {
+        VERCEL_TOKEN = credentials('VERCEL_TOKEN')
+    }
+    stages {
+        stage("Install") {
+            steps {
+                sh 'npm install'
             }
-            stage("Test"){
-                steps{
-                    echo "Running tests..."
-                }
-            }
-            stage("Build"){
-                steps{
-                    bat 'npm run build'
-                }
-            }
-            stage("Deploy"){
-                steps{
-                    bat 'npx vercel --prod --yes   --token=%VERCEL_TOKEN% '
-                }
-            }
-          }
         }
+        stage("Test") {
+            steps {
+                echo "Running tests..."
+            }
+        }
+        stage("Build") {
+            steps {
+                sh 'npm run build'
+            }
+        }
+        stage("Deploy") {
+            steps {
+                sh 'npx vercel --prod --yes --token=$VERCEL_TOKEN'
+            }
+        }
+    }
 }
