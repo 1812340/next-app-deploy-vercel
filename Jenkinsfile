@@ -22,10 +22,10 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        stage("Deploy") {
-            steps {
-                sh 'npx vercel --prod --yes --token=$VERCEL_TOKEN'
-            }
-        }
+       stage("Deploy") {
+    steps {
+        sh "npx vercel --prod --yes --token=${VERCEL_TOKEN}"
+    }
+}
     }
 }
